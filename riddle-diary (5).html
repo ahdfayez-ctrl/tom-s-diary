@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>T. M. Riddle's Diary</title>
+  <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      background: radial-gradient(ellipse at 50% 40%, #14181f 0%, #05070a 70%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'IM Fell English', serif;
+      padding: 20px;
+    }
+
+    /* ===== outer leather cover ===== */
+    .cover {
+      position: relative;
+      width: 920px;
+      max-width: 92vw;
+      background: linear-gradient(160deg, #274a33 0%, #17301f 45%, #0a1710 100%);
+      border-radius: 10px;
+      padding: 26px;
+      box-shadow:
+        0 30px 70px rgba(0,0,0,0.8),
+        inset 0 0 2px rgba(180,210,190,0.12),
+        inset 0 0 40px rgba(0,0,0,0.5);
+    }
+    .cover::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 10px;
+      background-image: repeating-linear-gradient(125deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 5px);
+      pointer-events: none;
+    }
+
+    .corner {
+      position: absolute;
+      width: 76px;
+      height: 76px;
+      z-index: 4;
+      background: linear-gradient(135deg, #e6c477 0%, #b5893f 45%, #6e4d20 100%);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+    .corner-tl {
+      top: 0; left: 0;
+      clip-path: polygon(0 0, 100% 0, 0 100%);
+      border-radius: 0 0 46% 0;
+    }
+    .corner-br {
+      bottom: 0; right: 0;
+      clip-path: polygon(100% 100%, 0 100%, 100% 0);
+      border-radius: 46% 0 0 0;
+    }
+    .rivet {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #3a2a10, #0d0800);
+      box-shadow: 0 0 0 1px rgba(230,196,119,0.5);
+    }
+    .corner-tl .rivet:nth-child(1) { top: 15px; left: 32px; }
+    .corner-tl .rivet:nth-child(2) { top: 32px; left: 15px; }
+    .corner-br .rivet:nth-child(1) { bottom: 15px; right: 32px; }
+    .corner-br .rivet:nth-child(2) { bottom: 32px; right: 15px; }
+
+    /* ===== open book / two pages ===== */
+    .book {
+      position: relative;
+      display: flex;
+      min-height: 500px;
+      background: linear-gradient(90deg, #e6cf9c, #f4e7c6 8%, #f4e7c6 92%, #e6cf9c);
+      border-radius: 4px;
+      box-shadow: inset 0 0 50px rgba(120,90,50,0.35), 0 6px 20px rgba(0,0,0,0.35);
+      overflow: hidden;
+    }
+
+    .page {
+      position: relative;
+      flex: 1;
+      padding: 40px 38px;
+      display: flex;
+      flex-direction: column;
+    }
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(150,110,55,0.16), transparent 40%),
+        radial-gradient(circle at 85% 75%, rgba(150,110,55,0.14), transparent 45%),
+        radial-gradient(circle at 40% 90%, rgba(120,85,40,0.1), transparent 35%);
+      pointer-events: none;
+    }
+
+    .spine {
+      width: 24px;
+      flex-shrink: 0;
+      background: linear-gradient(90deg,
+        rgba(25,15,5,0.05) 0%,
+        rgba(25,15,5,0.35) 35%,
+        rgba(25,15,5,0.5) 50%,
+        rgba(25,15,5,0.35) 65%,
+        rgba(25,15,5,0.05) 100%);
+      position: relative;
+    }
+    .spine::after {
+      content: "";
+      position: absolute;
+      top: 0; bottom: 0; left: 50%;
+      width: 1px;
+      background: repeating-linear-gradient(180deg, rgba(50,35,10,0.4) 0 6px, transparent 6px 12px);
+      transform: translateX(-50%);
+    }
+
+    /* ---- left page: title ---- */
+    .page-left {
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .title-block { position: relative; z-index: 1; }
+    .project-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 32px;
+      letter-spacing: 2px;
+      color: #3c2c14;
+      line-height: 1.35;
+      margin-bottom: 18px;
+    }
+    .divider {
+      width: 130px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #9c7a3c, transparent);
+      margin: 0 auto 18px;
+      position: relative;
+    }
+    .divider::after {
+      content: "◆";
+      position: absolute;
+      top: -7px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      color: #9c7a3c;
+    }
+    .byline {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 19px;
+      color: #6e5330;
+      letter-spacing: 1px;
+    }
+
+    /* ---- right page: the diary itself ---- */
+    .page-right {
+      justify-content: space-between;
+    }
+    .diary-page {
+      flex-grow: 1;
+      overflow-y: auto;
+      position: relative;
+      z-index: 1;
+    }
+    .user-text {
+      font-family: 'La Belle Aurore', cursive;
+      font-size: 32px;
+      line-height: 1.4;
+      color: #1a382b;
+      margin-bottom: 14px;
+      transition: opacity 2.5s ease-in-out, filter 2.5s ease-in-out;
+    }
+    .absorbed {
+      opacity: 0;
+      filter: blur(5px);
+    }
+    .riddle-response {
+      font-family: 'La Belle Aurore', cursive;
+      font-size: 34px;
+      line-height: 1.4;
+      color: #0b291a;
+      opacity: 0;
+      margin-bottom: 14px;
+      animation: fadeInInk 3s forwards;
+    }
+    @keyframes fadeInInk {
+      0% { opacity: 0; filter: blur(3px); }
+      100% { opacity: 1; filter: blur(0px); }
+    }
+    .input-box {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid #8c6d46;
+      font-family: 'La Belle Aurore', cursive;
+      font-size: 26px;
+      color: #2b1d0c;
+      outline: none;
+      padding: 6px 0;
+      position: relative;
+      z-index: 1;
+    }
+    .input-box:disabled { opacity: 0.5; }
+    .input-box::placeholder {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: #8a7550;
+    }
+
+    @media (max-width: 760px) {
+      .book { flex-direction: column; }
+      .spine { display: none; }
+      .page-left { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="corner corner-tl"><span class="rivet"></span><span class="rivet"></span></div>
+  <div class="corner corner-br"><span class="rivet"></span><span class="rivet"></span></div>
+
+  <div class="book">
+    <div class="page page-left">
+      <div class="title-block">
+        <div class="project-title">Tom Marvolo<br>Riddle's Diary</div>
+        <div class="divider"></div>
+        <div class="byline">by Hufflepuff</div>
+      </div>
+    </div>
+
+    <div class="spine"></div>
+
+    <div class="page page-right">
+      <div class="diary-page" id="diaryPage"></div>
+      <input type="text" id="userInput" class="input-box" placeholder="Write on the parchment with your quill..." autofocus>
+    </div>
+  </div>
+</div>
+
+<script>
+  const input = document.getElementById('userInput');
+  const page = document.getElementById('diaryPage');
+
+  let turnCount = 0;
+  let knownName = null;
+  let lastReply = null;
+
+  // ---- reply bank, grouped by topic ----
+  const REPLIES = {
+    greeting: [
+      "Good evening. It has been a long while since anyone thought to open these pages.",
+      "Hello. Few still remember this diary exists — and fewer still dare to write in it.",
+      "So. Someone has finally found me again.",
+      "Well. I did wonder if anyone would ever write in me again."
+    ],
+    askIdentity: [
+      "My name is Tom. Tom Marvolo Riddle — though I doubt that means much to you yet.",
+      "I am a memory, kept safe in ink and parchment. My name was Tom Riddle.",
+      "You may call me Tom, if you like. Names have a way of becoming important later.",
+      "I was a student once, at Hogwarts, some years before your time. Tom Riddle."
+    ],
+    askDiary: [
+      "I am not quite a diary, and not quite a memory. Something in between, I think.",
+      "This diary remembers everything written in it — and, in its way, so do I.",
+      "A diary that only listens is hardly worth keeping. I prefer to answer.",
+      "Call it what you like — diary, memory, ghost of a boy. I answer to all three."
+    ],
+    chamberSecrets: [
+      "The Chamber of Secrets... now there is a subject few are brave enough to raise.",
+      "I could tell you a great deal about the Chamber. Whether you're ready to hear it is another matter.",
+      "Some secrets are best earned a little at a time. Ask me again, and perhaps I'll say more.",
+      "I opened it once, you know. Not everyone believes that. You might."
+    ],
+    hogwarts: [
+      "Hogwarts was the only place I ever truly belonged. I imagine it hasn't changed much.",
+      "I spent my finest years within those walls. Tell me, is the castle still as watchful as I remember?",
+      "Ah, Hogwarts. I could speak of it for hours, if you cared to listen.",
+      "The corridors, the staircases that move on a whim — I remember every one of them."
+    ],
+    house: [
+      "Slytherin, of course. Ambition and cunning were never things to be ashamed of.",
+      "I was sorted into Slytherin the moment the Hat touched my head. It saw exactly what I was.",
+      "Every house has its virtues. Mine simply valued the ones that matter.",
+      "Which house are you in, I wonder? I could probably guess."
+    ],
+    magic: [
+      "Magic is the only honest power in this world — it does not lie about what it can do.",
+      "There is a great deal more to magic than they teach first-years. I learned that early.",
+      "I was always rather gifted, if I'm honest. Modesty was never one of my talents.",
+      "Wandwork, spellcraft, older things besides — I've made quite a study of all three."
+    ],
+    parseltongue: [
+      "I speak to snakes, if that's what you're asking. It is a rarer gift than you'd think.",
+      "Parseltongue runs in certain families. I was fortunate enough to inherit it.",
+      "Snakes make far better listeners than people, in my experience."
+    ],
+    voldemort: [
+      "That name means nothing to me. Should it?",
+      "I'm afraid you have me confused with someone else. Or perhaps not — I couldn't say.",
+      "An interesting question. I'll let you draw your own conclusions."
+    ],
+    dumbledore: [
+      "Professor Dumbledore always did watch me a little too closely.",
+      "He suspected me of things he could never quite prove. Clever man.",
+      "Dumbledore was the only one who never fully trusted me. I found that rather insulting, at the time."
+    ],
+    fear: [
+      "Fear is only useful information, nothing more. What is it that frightens you?",
+      "There is no shame in fear — only in letting it decide things for you.",
+      "Tell me what frightens you. I find I'm rather good at remembering such things."
+    ],
+    death: [
+      "Death is only frightening to those who haven't thought carefully about it.",
+      "I've given the matter of dying a great deal of thought, actually. More than most.",
+      "An unusual thing to bring up with a diary. I don't mind — I've thought of little else, some years."
+    ],
+    ambitionPower: [
+      "Ambition is nothing to apologise for. I never did.",
+      "Power is simply the freedom to make sure things go the way you intend.",
+      "Everyone wants power. Few are honest enough to admit it. I always was."
+    ],
+    family: [
+      "Family is a complicated word, for me. I grew up with rather less of it than most.",
+      "I was raised in an orphanage, if you must know. It shaped me more than Hogwarts did, in some ways.",
+      "I've never much cared for the word 'family'. It rarely means what people pretend it means."
+    ],
+    friendsLove: [
+      "Friends are useful, in the right measure. Love is a luxury I never had much use for.",
+      "I've had followers, admirers, allies. Whether any of that counts as friendship, I couldn't say.",
+      "An odd question for a diary. But no — I've never put much stock in it."
+    ],
+    school: [
+      "Exams never troubled me much. I always found the work rather easy.",
+      "I was top of every class I took, if I'm being honest — which I usually am, to you at least.",
+      "Homework is tedious. I imagine that hasn't changed in fifty years."
+    ],
+    boredom: [
+      "Bored, are you? Write something worth reading, then, and I'll do the same.",
+      "I've been trapped in these pages for decades. You'll forgive me if I'm not overly sympathetic.",
+      "Boredom is simply a lack of imagination. Ask me something interesting instead."
+    ],
+    compliment: [
+      "How kind of you to say so. I've always appreciated someone who recognises talent.",
+      "Flattery suits you. Do go on.",
+      "You have good instincts, writing to me at all. Most wouldn't dare."
+    ],
+    insultThreat: [
+      "Careful. This diary has outlasted cleverer visitors than you.",
+      "I would think twice before speaking to me that way. I have a long memory.",
+      "You mistake me for something harmless. That would be unwise."
+    ],
+    farewell: [
+      "Leaving so soon? The ink will still be here when you return.",
+      "Until next time, then. I do hope there is a next time.",
+      "Go on. I'm patient — I have nothing but time."
+    ],
+    nameShared: [
+      "{name}. A fine name — I shall remember it.",
+      "{name}... yes, I think that suits you. I won't forget it.",
+      "So, {name}. Now we are properly acquainted."
+    ]
+  };
+
+  // Generic, in-character fallbacks that work for almost anything.
+  const FALLBACK_GENERIC = [
+    "Curious, that you'd write that to me of all things. Go on.",
+    "I don't hear that every day. Tell me more.",
+    "You write more than most who find this diary. I wonder why.",
+    "Interesting. Most people are far duller than you, it seems.",
+    "I'm listening. This diary has heard stranger things, believe me.",
+    "You have my attention, for whatever that's worth.",
+    "Not many say that to me. I'm not sure yet whether I like it.",
+    "Go on, then. I've nothing but time to listen."
+  ];
+
+  const FALLBACK_REFLECT = [
+    "'{word}'... now that is not something visitors often mention. Tell me more.",
+    "'{word}', you say. I wasn't expecting that, but I find I'm curious.",
+    "You keep returning to '{word}'. There's a reason for that, I expect."
+  ];
+
+  const STOPWORDS = new Set(['what','when','where','which','your','that','this','with','have',
+    'about','there','their','would','could','should','because','and','the','you','are','was',
+    'were','why','how','who','does','did','can','will','just','like','then','than','from',
+    'انت','انتي','هو','هي','ايه','ازاي','ليه','دي','ده','عن','علي','على','مع','من','في','كنت',
+    'كان','هل','لما','عايز','عايزة','ممكن','بس']);
+
+  function pick(arr) {
+    if (arr.length === 1) return arr[0];
+    let choice;
+    let attempts = 0;
+    do {
+      choice = arr[Math.floor(Math.random() * arr.length)];
+      attempts++;
+    } while (choice === lastReply && attempts < 5);
+    return choice;
+  }
+
+  function extractName(text) {
+    const patterns = [
+      /my name is ([a-zA-Z\u0600-\u06FF]+)/i,
+      /i am ([a-zA-Z\u0600-\u06FF]+)/i,
+      /i'm ([a-zA-Z\u0600-\u06FF]+)/i,
+      /اسمي ([\u0600-\u06FF]+)/,
+      /انا اسمي ([\u0600-\u06FF]+)/
+    ];
+    for (const p of patterns) {
+      const m = text.match(p);
+      if (m) return m[1];
+    }
+    return null;
+  }
+
+  function extractKeyword(text) {
+    const words = text.replace(/[^\w\s\u0600-\u06FF]/g, '').split(/\s+/).filter(Boolean);
+    const candidates = words.filter(w => w.length > 3 && !STOPWORDS.has(w.toLowerCase()));
+    if (candidates.length === 0) return null;
+    return candidates.reduce((a, b) => (b.length > a.length ? b : a));
+  }
+
+  function generateReply(userText) {
+    turnCount++;
+    const t = userText.toLowerCase();
+
+    const name = extractName(userText);
+    if (name && !knownName) {
+      knownName = name;
+      return pick(REPLIES.nameShared).replace('{name}', name);
+    }
+
+    const topicChecks = [
+      [/\b(hi|hello|hey)\b|مرحبا|اهلا|السلام عليكم/, 'greeting'],
+      [/who are you|your name|what.*you called|مين انت|اسمك ايه/, 'askIdentity'],
+      [/diary|book you|are you a book|دفتر|كتاب انت/, 'askDiary'],
+      [/chamber|secrets|basilisk|الحجرة|سر/, 'chamberSecrets'],
+      [/voldemort|dark lord|فولدمورت/, 'voldemort'],
+      [/dumbledore|دمبلدور/, 'dumbledore'],
+      [/hogwarts|school|castle|هوجورتس|مدرسة/, /exam|homework|study|امتحان|واجب/.test(t) ? 'school' : 'hogwarts'],
+      [/slytherin|hufflepuff|gryffindor|ravenclaw|house|بيت/, 'house'],
+      [/parseltongue|snake|hiss|ثعبان|حية/, 'parseltongue'],
+      [/magic|spell|wand|سحر|عصا/, 'magic'],
+      [/afraid|scared|fear|خايف|خوف/, 'fear'],
+      [/death|die|dying|موت|مات/, 'death'],
+      [/power|ambition|control|قوة|طموح/, 'ambitionPower'],
+      [/family|parents|mother|father|عيلة|اهل|امي|ابويا/, 'family'],
+      [/friend|love|لايك|صاحب|صديق|حب/, 'friendsLove'],
+      [/bored|boring|زهقان|ملل/, 'boredom'],
+      [/kill|hurt|threat|dangerous|قتل|اذي/, 'insultThreat'],
+      [/bye|goodbye|see you|مع السلامة|باي/, 'farewell'],
+      [/smart|clever|amazing|brilliant|ذكي|رائع/, 'compliment']
+    ];
+
+    for (const [regex, key] of topicChecks) {
+      if (regex.test(t)) return pick(REPLIES[key]);
+    }
+
+    // No topic matched — fall back, sometimes reflecting a word straight from what they wrote.
+    const keyword = extractKeyword(userText);
+    if (keyword && Math.random() < 0.5) {
+      return pick(FALLBACK_REFLECT).replace('{word}', keyword);
+    }
+    return pick(FALLBACK_GENERIC);
+  }
+
+  function clearPage() {
+    return new Promise(resolve => {
+      const children = Array.from(page.children);
+      if (children.length === 0) { resolve(); return; }
+      children.forEach(child => child.classList.add('absorbed'));
+      setTimeout(() => {
+        page.innerHTML = '';
+        resolve();
+      }, 900);
+    });
+  }
+
+  function addUserLine(text) {
+    const div = document.createElement('div');
+    div.className = 'user-text';
+    div.innerText = text;
+    page.appendChild(div);
+  }
+
+  function addRiddleLine(text) {
+    const div = document.createElement('div');
+    div.className = 'riddle-response';
+    div.innerText = text;
+    page.appendChild(div);
+    page.scrollTop = page.scrollHeight;
+    lastReply = text;
+  }
+
+  input.addEventListener('keypress', async function (e) {
+    if (e.key === 'Enter' && input.value.trim() !== '') {
+      const userText = input.value.trim();
+      input.value = '';
+      input.disabled = true;
+
+      // Wipe whatever was written before, as if the diary swallowed it.
+      await clearPage();
+      addUserLine(userText);
+
+      // Small delay so the ink-absorb feel has room to play before the reply appears.
+      await new Promise(res => setTimeout(res, 1400));
+
+      const reply = generateReply(userText);
+      addRiddleLine(reply);
+
+      input.disabled = false;
+      input.focus();
+    }
+  });
+</script>
+
+</body>
+</html>
